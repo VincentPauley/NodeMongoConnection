@@ -6,22 +6,46 @@
       font-family: arial;
       color: #3E3E3E;
     }
-    #test-area {
-      width: 500px;
+    #add-team-container {
+      width: 400px;
       height: 100vh;
       border: 2px solid black;
     }
-
+    .form-row {
+      padding: 6px 0px;
+    }
+    input[type=text] {
+      float: right;
+      width: 200px;
+      border: 0px;
+      border-bottom: 1px solid #A8A8A8;
+      transition: border 1s;
+      outline: none;
+    }
+    input[type=text]:focus {
+      border-bottom: 1px solid blue;
+    }
+    input[type=submit], input[type=button] {
+      border: 1px solid #000;
+      float: right;
+      padding: 4px;
+      font-weight: bold;
+    }
+    input[type=submit]:hover {
+      background-color: white;
+      border: 1px solid green;
+      color: green;
+    }
   </style>
 </head>
 <body>
 <h1>Perform CRUD Operations on the Hockey Database</h1>
-  <div id="test-area">
+  <div id="add-team-container">
   </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
 
-$('#test-area').load('http://localhost:8080/public/fragment.html' + '#test-area');
+$('#add-team-container').load('http://localhost:8080/public/fragment.html' + '#add-team-container');
 
 /*
   $.ajax({

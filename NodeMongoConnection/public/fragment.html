@@ -1,10 +1,22 @@
+<style>
+  #add-hockey-team {
+    padding: 20px;
+
+  }
+</style>
 <form id="add-hockey-team">
   <h3>Add hockey teams to DB:</h3>
-  <label for="team-name">Team Name:</label>
-  <input type="text" name="name" id="name"/><br />
-  <label for="team-location">Team Location:</label>
-  <input type="text" name="location" id="location"/><br />
-  <input type="submit" value="Submit Team" />
+  <div class="form-row">
+    <label for="team-name">Team Name:</label>
+    <input type="text" name="name" id="name"/>
+  </div>
+  <div class="form-row">
+    <label for="team-location">Team Location:</label>
+    <input type="text" name="location" id="location"/><br />
+  </div>
+  <div class="form-row">
+    <input type="submit" value="Submit Team" />
+  </div>
 </form>
 <script>
   /* Submit form with ajax */
