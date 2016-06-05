@@ -1,0 +1,19 @@
+<form id="add-hockey-team">
+  <h3>Add hockey teams to DB:</h3>
+  <label for="team-name">Team Name:</label>
+  <input type="text" name="name" id="name"/><br />
+  <label for="team-location">Team Location:</label>
+  <input type="text" name="location" id="location"/><br />
+  <input type="submit" value="Submit Team" />
+</form>
+<script>
+  /* Submit form with ajax */
+  $('#add-hockey-team').on('submit', function(e) {
+    e.preventDefault(); // prevent standard submission
+
+    var formValues = $(this).serialize(); // put form values into a string for submission to the server
+    $.post('http://localhost:8080/newteam', formValues, function(data) {
+      $(this).html(data);
+    });
+  });
+</script>

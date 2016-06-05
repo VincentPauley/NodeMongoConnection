@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {
+      font-family: arial;
+      color: #3E3E3E;
+    }
+    #test-area {
+      width: 500px;
+      height: 100vh;
+      border: 2px solid black;
+    }
+
+  </style>
+</head>
+<body>
+<h1>Perform CRUD Operations on the Hockey Database</h1>
+  <div id="test-area">
+  </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+
+$('#test-area').load('http://localhost:8080/public/fragment.html' + '#test-area');
+
+/*
+  $.ajax({
+    url : 'http://localhost:8080/server',
+    data : {
+      format: 'json'
+    },
+    success: function(data) {
+      console.log(data);
+    }
+  });
+*/
+
+</script>
+</body>
+</html>
