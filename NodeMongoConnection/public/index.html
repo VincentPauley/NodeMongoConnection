@@ -5,10 +5,10 @@
     * {
       font-family: arial;
       color: #3E3E3E;
+      box-sizing: border-box;
     }
     #add-team-container {
       width: 400px;
-      height: 100vh;
       border: 2px solid black;
     }
     .form-row {
@@ -36,16 +36,32 @@
       border: 1px solid green;
       color: green;
     }
+    #show-teams {
+      width: 400px;
+      height: 100vh;
+      border: 1px solid black;
+      padding: 2px;
+    }
   </style>
 </head>
 <body>
 <h1>Perform CRUD Operations on the Hockey Database</h1>
   <div id="add-team-container">
   </div>
+  <div id="show-teams">
+    <input id="find-all" type="button" value="Find All Teams" />
+    <div id="team-display">
+    </div>
+  </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
-
+// load in Add Team
 $('#add-team-container').load('http://localhost:8080/public/fragment.html' + '#add-team-container');
+
+/* find all teams */
+$('#find-all').on('click', function() {
+  $('#team-display').load('http://localhost:8080/find-all-page' + '#team-display');
+});
 
 /*
   $.ajax({

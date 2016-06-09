@@ -14,6 +14,11 @@ var filePath = path.join(__dirname + '/public/index.html');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended : false}));
 
+/*------------------------------------------------------*/
+
+/* GLOBALS */
+var allTeams;
+
 /* GET REQUST WITH ARG
 app.get('/team/:teamName', function(req, res) {
   var teamName = req.params.teamName;
@@ -29,11 +34,12 @@ app.get('/', function(req, res) {
 
 /* handler for html fragment */
 app.get('/public/fragment.html', function(req, res) {
-  // res.send('you have requested a fragment resource');
   var fragment = path.join(__dirname + '/public/fragment.html');
   var readstream = fs.createReadStream(fragment);
   readstream.pipe(res);
 });
+
+
 
 /* handle post request for new team */
 app.post('/newteam', function(req, res) {
@@ -43,10 +49,35 @@ app.post('/newteam', function(req, res) {
   addTeam(teamName, teamLocation);
 });
 
+/* send find all page */
+app.get('/find-all-page', function(req, res) {
+  var allTeams = path.join(__dirname + '/public/findAll.html');
+  var readstream = fs.createReadStream(allTeams);
+  readstream.pipe(res);
+});
+
+/* handle read request for all teams, send array of docs back */
+app.get('/all', function(req, res) {
+  MongoClient.connect('mongodb://localhost:27017/hockey', function(err, db) {
+    if(err) {
+      console.log(err);
+    } else {
+      var collection = db.collection('teams');
+
+      /* find all teams and send them in response */
+      collection.find({}).toArray(function(err, items) {
+        res.send(items);
+      });
+    }
+  });
+});
+
+/*---------------------------------------------------------------------
+ DATABASE OPERATIONS
+ -------------------*/
 
 /* add to database with query */
 function addTeam (teamName, location) {
-
   // build
   var newDoc = {'teamName' : teamName, 'location' : location}
 
@@ -60,27 +91,10 @@ function addTeam (teamName, location) {
   });
 }
 
+// read now handled directly by the '/all' route
 
-
-
-
-
-function runQuery() {
-  /* Connect to database */
-  MongoClient.connect('mongodb://localhost:27017/hockey', function(err, db) {
-    if(err) {
-      console.log('error');
-    } else {
-      var collection = db.collection('teams'); // assign collection to var
-
-      /* find team with the name supplied */
-      collection.find({teamName : 'Blackhawks'}).toArray(function(err, items) {
-        teamLocation = items[0].location; // find location of team supplied
-        console.log(teamLocation);
-      });
-    }
-  });
-}
-
+/*---------------------------------------------------------------------
+ PORT CONFIGURATION
+ ------------------*/
 app.listen(8080);
 console.log('Server listening on port 8080');

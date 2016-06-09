@@ -1,0 +1,37 @@
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  td {
+    border-bottom: 1px solid #A8A8A8;
+    padding: 3px;
+  }
+  .location {
+    width: 130px;
+    text-align: center;
+  }
+</style>
+<h3>Current teams in DB:</h3>
+<table id="team-results">
+  <tr>
+    <td style="font-weight:bold;">Team Name</td>
+    <td style="font-weight:bold;">Location</td>
+  </tr>
+</table>
+<script>
+$.get('http://localhost:8080/all', function(data) {
+
+  /* loop through returns from the db */
+  var i;
+
+  var tableResults = '';
+
+  for(i=0;i<data.length;i++) {
+    var teamName = data[i].teamName;
+    var teamLocation = data[i].location;
+    tableResults += '<tr><td>' + teamName  + '</td><td class=\'location\'>' + teamLocation + '</td></tr>';
+  }
+
+  $('#team-results').append(tableResults);
+});
+</script>
