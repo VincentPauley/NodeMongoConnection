@@ -3,35 +3,73 @@
     border-collapse: collapse;
   }
   td {
-    border-bottom: 1px solid #A8A8A8;
-    padding: 3px;
+    padding: 5px;
   }
   .location {
     width: 130px;
     text-align: center;
   }
+  .team-panel {
+    border-bottom: 1px solid #D1D1D1;
+    box-sizing: border-box;
+  }
+  td:nth-child(1) {
+    width: 140px;
+  }
+  td:nth-child(2) {
+    width: 200px;
+  }
+  td:nth-child(3) {
+    width: 200px;
+  }
+  .modify-team {
+
+  }
 </style>
 <h3>Current teams in DB:</h3>
-<table id="team-results">
-  <tr>
-    <td style="font-weight:bold;">Team Name</td>
-    <td style="font-weight:bold;">Location</td>
-  </tr>
-</table>
+<div id="team-results">
+  <div class="team-panel">
+    <table>
+      <tr>
+        <td style="font-weight:bold;">Team Name</td>
+        <td style="font-weight:bold;">Team Location</td>
+        <td style="font-weight:bold;">League</td>
+      </tr>
+    </table>
+  </div>
+</div>
 <script>
 $.get('http://localhost:8080/all', function(data) {
+  /* initialize table */
+  var teamResults = '';
 
   /* loop through returns from the db */
   var i;
-
-  var tableResults = '';
-
   for(i=0;i<data.length;i++) {
+    var teamID = data[i]._id;
     var teamName = data[i].teamName;
     var teamLocation = data[i].location;
-    tableResults += '<tr><td>' + teamName  + '</td><td class=\'location\'>' + teamLocation + '</td></tr>';
-  }
+    var league = data[i].league;
 
-  $('#team-results').append(tableResults);
+    var teamTile = '<div class=\'team-panel\'><table><tr><td>' + teamName + '</td><td>' + teamLocation + '</td><td>' + league + '</td><td><input id="' + teamID + '" class=\'modify-team\' type=\'button\' value=\'Modify Team\'</td></tr></table></div>';
+
+    teamResults += teamTile;
+  }
+  $('#team-results').append(teamResults);
+  /* put constructed table into page */
+  // $('#team-results').append(tableResults);
 });
+
+/* handle click on modify button */
+/*$('.modify-team').live('click', function() {
+  alert('trace');
+});
+*/
+$(document).on('click', '.modify-team', function() {
+  alert($(this).attr('id'));
+});
+
+
+
+
 </script>
