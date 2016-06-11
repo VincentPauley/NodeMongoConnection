@@ -9,9 +9,14 @@
     width: 130px;
     text-align: center;
   }
+  label {
+    display : block;
+    padding: 4px;
+  }
   .team-panel {
     border-bottom: 1px solid #D1D1D1;
     box-sizing: border-box;
+    display: block;
   }
   td:nth-child(1) {
     width: 140px;
@@ -20,10 +25,20 @@
     width: 200px;
   }
   td:nth-child(3) {
-    width: 200px;
+    width: 300px;
   }
   .modify-team {
 
+  }
+  .modify-form-inputs {
+    background-color: #D3D3D3;
+    border-top: 1px solid #919191;
+    border-bottom: 1px solid #919191;
+    display: none;
+    padding: 6px;
+  }
+  .modify-form-inputs > label {
+    margin-right: 300px;
   }
 </style>
 <h3>Current teams in DB:</h3>
@@ -51,25 +66,34 @@ $.get('http://localhost:8080/all', function(data) {
     var teamLocation = data[i].location;
     var league = data[i].league;
 
-    var teamTile = '<div class=\'team-panel\'><table><tr><td>' + teamName + '</td><td>' + teamLocation + '</td><td>' + league + '</td><td><input id="' + teamID + '" class=\'modify-team\' type=\'button\' value=\'Modify Team\'</td></tr></table></div>';
+    var teamTile = '<div class=\'team-panel\'><table><tr><td>' + teamName + '</td><td>' + teamLocation + '</td><td>' + league + '</td><td><input id="' + teamID + '" class=\'modify-team\' type=\'button\' value=\'Modify Team\'</td></tr></table></div><div class=\'modify-form-inputs\'><label>Team Name: <input type=\'text\' name=\'team-name\' /></label><label>Team Location: <input type=\'text\' name=\'team-location\' /></label><label>League: <input type=\'text\' name=\'league\' /></label></div>';
 
+    // concatenate each iteration to teamResults
     teamResults += teamTile;
   }
   $('#team-results').append(teamResults);
-  /* put constructed table into page */
-  // $('#team-results').append(tableResults);
 });
 
-/* handle click on modify button */
-/*$('.modify-team').live('click', function() {
-  alert('trace');
-});
-*/
+
+
+/* click handler for modify*/
 $(document).on('click', '.modify-team', function() {
-  alert($(this).attr('id'));
+
+  // $(this).parents('.team-panel').css('border', '4px solid black');
+
+  var modifyArea = $(this).parents('.team-panel').next('.modify-form-inputs');
+
+  modifyArea.slideToggle();
+
+
+  // $(this).parents('.team-panel').next('.modify-form-inputs').slideToggle();
+
+
+/*
+  if($(this).has('input')) {
+    <label>Team Name: <input type=\'text\' name=\'team-name\' /></label><label>Team Location: <input type=\'text\' name=\'team-location\' /></label><label>League: <input type=\'text\' name=\'league\' /></label>
+  }*/
 });
-
-
 
 
 </script>
